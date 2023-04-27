@@ -1,0 +1,33 @@
+{
+  "name": "bus1",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@kjgl77/datav-vue3": "^1.4.5",
+    "@quasar/extras": "^1.16.2",
+    "@wocwin/t-ui-plus": "^1.0.7",
+    "axios": "^1.3.6",
+    "echarts": "^5.4.2",
+    "element-plus": "^2.3.3",
+    "lineupjs": "^4.3.0-alpha.0",
+    "path": "^0.12.7",
+    "quasar": "^2.11.10",
+    "vue": "^3.2.47",
+    "vue-echarts": "^6.5.4",
+    "vue-router": "^4.1.6",
+    "vue-virtual-scroller": "^2.0.0-beta.8",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.1.0",
+    "vite": "^4.2.0",
+    "vite-plugin-windicss": "^1.8.10",
+    "windicss": "^3.5.6"
+  }
+}
