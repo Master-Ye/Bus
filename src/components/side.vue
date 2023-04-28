@@ -1,7 +1,7 @@
 <template>
   <q-splitter
     v-model="splitterModel"
-    style="height: 1000px; width: 400px"
+    style="height: 1500px; width: 400px;overflow:hidden;"
     class="absolute left-0 top-0 "
   >
     <template v-slot:before>
@@ -14,6 +14,7 @@
           :icon="item.icon"
           :class="item.class"
           :disable="item.disable"
+          @click="push(item.value)"
         />
       </q-tabs>
     </template>
@@ -33,8 +34,8 @@ export default {
         { label: "预设条件", value: 0, disable:true},
         { label: "新建方案", value: 5, class: "text-orange", icon: "add_circle_outline" },
         { label: "方案比较", value: 0, disable:true},
-        { label: "多方案比较", value: 6, class: "text-teal", icon: "view_list" },
-        { label: "两个方案地图比较", value: 7, class: "text-teal", icon: "compare_arrows" },
+        { label: "不同方案比较", value: 6, class: "text-teal", icon: "view_list" },
+
       ],
       group: null,
     };
@@ -42,14 +43,9 @@ export default {
   watch: {
     group(newgroup,oldgroup) {
       this.$store.state.group = newgroup;
-      if (newgroup == 5) {
-        this.$router.push("/setting");
-      }
-      if(newgroup!=5&&oldgroup==5&&newgroup!=0)
-      {
-        this.$router.push("/")
-      }
+
     },
+
     newway(newvalue){
       let tem={ label: newvalue[0], value: 7, class: "text-purple", icon: "manage_accounts" }
 this.optionsone.splice(5, 0, tem);
@@ -58,9 +54,25 @@ this.optionsone.splice(5, 0, tem);
   computed:{
 newway(){
   return this.$store.state.newway
+},
+},
+methods:{
+  push(value){
+if(value==6)
+{
+  this.$router.push("/compare")
 }
-  }
-};
+if(value==5)
+{
+  this.$router.push("/setting");
+}
+if(value>0&&value<5)
+{
+  this.$router.push("/");
+}
+  },
+
+}};
 </script>
 
 <style></style>

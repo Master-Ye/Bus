@@ -1,15 +1,20 @@
 <script setup>
 
 import side from "./components/side.vue"
+
 </script>
 
 <template>
   <div>
     <side></side>
 
+    <router-view v-slot="{ Component }">
 
-  <router-view ></router-view>
+     <keep-alive include="Setting">
+       <component :is="Component"/>
+   	 </keep-alive>
 
+</router-view>
 
 
   </div>

@@ -16,7 +16,7 @@
 import demo1 from "../components/demo1.vue"
 
 import demo2 from '../components/demo2.vue'
-import table1 from  "../components/table.vue"
+import sandian from '../components/sandian.vue'
 
 
 </script>

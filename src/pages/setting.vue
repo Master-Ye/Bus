@@ -209,16 +209,45 @@
       </template>
     </el-table-column>
   </el-table>
+  <q-dialog v-model="persistent" persistent transition-show="scale" transition-hide="scale">
+      <q-card class="bg-red text-white" style="width: 300px">
+        <q-card-section>
+          <div class="text-h6">Error</div>
+        </q-card-section>
 
+        <q-card-section class="q-pt-none">
+        停车场或车辆不能为空
+        </q-card-section>
+
+        <q-card-actions align="right" class="bg-white text-teal">
+          <q-btn flat label="OK" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <q-dialog v-model="persistent1" persistent transition-show="scale" transition-hide="scale">
+      <q-card class="bg-red text-white" style="width: 300px">
+        <q-card-section>
+          <div class="text-h6">Error</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+      预设或名称不能为空
+        </q-card-section>
+
+        <q-card-actions align="right" class="bg-white text-teal">
+          <q-btn flat label="OK" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   <q-btn color="red"  icon-right="send" label="添加此方案"  class="inline-block relative left-82" @click="upload()"/>
     </span></div>
   </div>
 </template>
 
 <script>
-import { useQuasar } from 'quasar'
-export default {
 
+export default {
+  name: 'Setting',
   mounted() {
     var that = this;
     var line = function (data) {
@@ -479,7 +508,12 @@ export default {
   },
   methods: {
   upload()
-  {const arr=[this.wayname]
+  {if(this.tableData.length==0||this.wayname=="")
+    {
+this.persistent1=true
+      return
+    }
+    const arr=[this.wayname]
 
     let arr2 = [this.tableData]
     let arr3 = arr.concat(arr2)
@@ -536,15 +570,26 @@ deleteRow(index)  {
 addcarpark1(params){
   let car=this.comcar
 let park=this.compark
+if(car==""||park=="")
+{
+  this.persistent=true
+  return
+}
 let temp={car,park}
 console.log(temp)
   if (!this.tableData.includes(temp)) {
     this.tableData.push(temp);
 }
+
 },
 addcarpark3(params){
   let car=this.tempcar
 let park=this.temppark
+if(car==""||park=="")
+{
+  this.persistent=true
+  return
+}
 let temp={car,park}
   if (!this.tableData.includes(temp)) {
     this.tableData.push(temp);
@@ -554,6 +599,11 @@ this.dialog=false
 addcarpark2()
 {let car=this.ezcar
 let park=this.ezpark
+if(car==""||park=="")
+{
+  this.persistent=true
+  return
+}
   let temp={car,park}
   if (!this.tableData.includes(temp)) {
     this.tableData.push(temp);
@@ -563,6 +613,8 @@ let park=this.ezpark
 
   data() {
     return {
+      persistent1:false,
+      persistent:false,
       newway:[],
       tempcar:"",
       temppark:"",

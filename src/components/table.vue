@@ -1,5 +1,5 @@
 <template>
-<div ref="paimingtable" style="height:200px;width:1200px;"></div>
+<div ref="paimingtable" style="height:200px;"></div>
 </template>
 
 <script>

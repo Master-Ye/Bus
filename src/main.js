@@ -10,6 +10,7 @@ import DataVVue3 from '@kjgl77/datav-vue3'
 import myutils from './utils/index';
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 import EChart from "vue-echarts";
+import "echarts"
 app.component("v-chart", EChart);
 app.use(DataVVue3)
 app.use(myutils)
