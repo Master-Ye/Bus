@@ -2,7 +2,7 @@
   <q-splitter
     v-model="splitterModel"
     style="height: 1000px; width: 400px"
-    class="fixed left-0 top-0"
+    class="absolute left-0 top-0 "
   >
     <template v-slot:before>
       <q-tabs v-model="group" vertical class="bg-grey-2" align="center">
@@ -36,7 +36,7 @@ export default {
         { label: "多方案比较", value: 6, class: "text-teal", icon: "view_list" },
         { label: "两个方案地图比较", value: 7, class: "text-teal", icon: "compare_arrows" },
       ],
-      group: 5,
+      group: null,
     };
   },
   watch: {
@@ -50,7 +50,16 @@ export default {
         this.$router.push("/")
       }
     },
+    newway(newvalue){
+      let tem={ label: newvalue[0], value: 7, class: "text-purple", icon: "manage_accounts" }
+this.optionsone.splice(5, 0, tem);
+    }
   },
+  computed:{
+newway(){
+  return this.$store.state.newway
+}
+  }
 };
 </script>
 

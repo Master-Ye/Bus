@@ -17,14 +17,14 @@ app.use(store)
 import 'quasar/dist/quasar.css'
 import router from './router'
 app.use(router)
-import { Quasar } from 'quasar'
+import { Quasar , Dialog} from 'quasar'
 import '@quasar/extras/material-icons/material-icons.css'
-import TuiPlus from '@wocwin/t-ui-plus'
+
 import '@wocwin/t-ui-plus/lib/style.css'
 // Import Quasar css
-app.use(TuiPlus)
+
 app.use(Quasar, {
-    plugins: {}, // import Quasar plugins and add here
+    plugins: { Dialog}, // import Quasar plugins and add here
   })
 
 

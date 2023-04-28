@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="q-pa-md relative left-130 bottom-10 z-50 w-100">
+  <div style="overflow:hidden;">
+    <div class="q-pa-md relative left-120 bottom-0 z-50 w-100">
       <div class="q-gutter-sm">
         <q-radio v-model="value" val="1" label="城市停车分配" />
         <q-radio v-model="value" val="2" label="停车场车队占比" />
@@ -12,7 +12,7 @@
   <q-option-group :options="optionsone" type="radio" v-model="group" />
     </div>-->
 
-    <div class="flex justify-between ml-30 relative bottom-40">
+    <div class="flex justify-between left-20 relative bottom-30">
       <div id="main" style="width: 1200px; height: 700px" class="main mt-0"></div>
     </div>
   </div>
