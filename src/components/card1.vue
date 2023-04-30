@@ -18,14 +18,14 @@
 
       <q-card-section horizontal >
         <q-card-section>
-       <table1></table1>
-       <sandian ></sandian>
+       <table1 class="relative top-5 right-2"></table1>
+       <sandian class="relative left-25"></sandian>
         </q-card-section>
 
         <q-separator vertical />
 
         <q-card-section class="col-7">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        <comparezhu></comparezhu>
         </q-card-section>
       </q-card-section>
     </q-card>
@@ -34,11 +34,12 @@
 </template>
 
 <script>
+import comparezhu from "./comparezhu.vue"
 import table1 from "./table.vue"
 import sandian from "./sandian.vue"
 export default {
     components:{
-        table1,sandian
+        table1,sandian,comparezhu
     },
 data(){
     return {

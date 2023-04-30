@@ -22,16 +22,11 @@
 import parkparkpointdata from "../utils/parkparkpointdata.js";
 import line from "../utils/line.js";
 import parkstationpointdata from "../utils/parkstationpointdata.js";
-import findarray from "../utils/findarray";
+import findarray from "../utils/findArray";
 import "echarts/extension/bmap/bmap";
 import * as echarts from "echarts";
 export default {
-  watch: {
-    value1(value) {
-      if (value == "自定义保留路线") {
-        this.go1(11);
-      }
-    },
+  watch:{
     group(newgroup) {
 
       this.$store.state.nowway = newgroup;
@@ -57,7 +52,7 @@ export default {
 
       }
       if (this.group == 3) {
-        this.$store.state.truewm = this.$store.state.GSwm;
+
         if (this.value == 1) {
           this.go1(13);
         }
@@ -68,7 +63,15 @@ export default {
         this.$store.state.truewm = this.$store.state.GSwm;
       }
       if (this.group == 4) {
+        this.$store.state.truewm = this.$store.state.GS2wm;
+        if (this.value == 1) {
+          this.go1(14);
+        }
+        if (this.value == 2) {
+          this.go2(24);
+        }
         this.nowmethods = 4;
+
       }
     },
     value(newvalue) {
@@ -162,6 +165,21 @@ return this.$store.state.group
     }
 
     this.gdGSdata1 = res;
+      var res = [];
+    for (var i = 0; i < this.$store.state.gdGS2data.length; i++) {
+      res.push({
+        coords: [this.$store.state.gdGS2data[i][0], this.$store.state.gdGS2data[i][2]],
+        name: this.$store.state.gdGS2data[i][1] + "——" + this.$store.state.gdGS2data[i][3],
+        value: this.$store.state.gdGS2data[i][4],
+        lineStyle: {
+          width: this.$store.state.gdGS2data[i][4] / 25 + 1.2,
+          opacity: this.$store.state.gdGS2data[i][4] / 25 + 0.3,
+          curveness: 0.2,
+        },
+      });
+    }
+
+    this.gdGS2data1 = res;
     var res = [];
     for (var i = 0; i < this.$store.state.gdxdata.length; i++) {
       res.push({
@@ -490,6 +508,18 @@ return this.$store.state.group
               station = parkstationpointdata(this.$store.state.gdGSstationforpark[i][1]);
             }
             break;
+            case 4:
+            {
+              array = findarray(
+                this.$store.state.GS2piedata,
+                this.$store.state.nowparkname
+              );
+              res = line(this.$store.state.parkGS2data[i][1]);
+
+              park = parkparkpointdata(this.$store.state.gdGS2stationforpark[i][0]);
+              station = parkstationpointdata(this.$store.state.gdGS2stationforpark[i][1]);
+            }
+            break;
 
           default:
             console.log(j,"error");
@@ -615,6 +645,10 @@ piedata1=this.$store.state.gdxpiedata1;
          { piedata = this.$store.state.gdGSpiedata;
 piedata1=this.$store.state.gdGSpiedata1;}
           break;
+          case 24:
+         { piedata = this.$store.state.GS2piedata;
+piedata1=this.$store.state.gdGS1piedata1;}
+          break;
         default:
           console.log("error");
       }
@@ -632,6 +666,16 @@ piedata1=this.$store.state.gdGSpiedata1;}
           });
         }
         let temp = {
+          color: [
+          "#546fc6",
+          "#91cc75",
+          "#fac858",
+          "#ee6666",
+          "#9a60b4",
+          "#3ba272",
+          "#73c0de",
+
+        ],
           center: piedata[i][0],
           coordinateSystem: "bmap",
           data: data,
@@ -654,7 +698,7 @@ piedata1=this.$store.state.gdGSpiedata1;}
       for(var i =0;i<piedata1.length;i++){
 				let temp = {
 					center: piedata1[i][0],
-				 // 饼图每个扇形的颜色
+				 color:["#ff85c0","#FF7F50"],
 					coordinateSystem: 'bmap',
 					data: [
 						{name: '未改变', value: piedata1[i][2]},
@@ -667,20 +711,11 @@ piedata1=this.$store.state.gdGSpiedata1;}
 					radius: [2,(piedata1[i][2]+piedata1[i][3]-1)/(621-1)*10+5],
 					type: 'pie'
 				}
-                console.log(temp.radius)
+
 				res.push(temp)}}
       let option = {
-        color: [
-          "#5470c6",
-          "#53605d",
-          "#fac858",
-          "#ee6666",
-          "#73c0de",
-          "#9a60b4",
-          "#fc8452",
-          "#5b1875",
-          "#6ab92c",
-        ],
+
+
         bmap: {
           center: [centerCity.lng, centerCity.lat], // 设置地图中心点
           zoom: 12, // 设置地图层级
@@ -804,7 +839,7 @@ piedata1=this.$store.state.gdGSpiedata1;}
         },
         legend: {
           orient: "vertical",
-          left: "20%",
+          left: "8%",
           itemStyle: {
             borderColor: "#000000",
           },
@@ -845,6 +880,13 @@ piedata1=this.$store.state.gdGSpiedata1;}
         case 13:
           {
             linedata = this.gdGSdata1;
+            parkpointdata = this.parkpointdata;
+            stationpointdata = this.stationpointdata;
+          }
+          break;
+          case 14:
+          {
+            linedata = this.gdGS2data1;
             parkpointdata = this.parkpointdata;
             stationpointdata = this.stationpointdata;
           }
@@ -1185,6 +1227,7 @@ piedata1=this.$store.state.gdGSpiedata1;}
             ],
           },
         },
+
         tooltip: {
           showContent: true,
           formatter: "{b}:{c}",
@@ -1205,8 +1248,8 @@ piedata1=this.$store.state.gdGSpiedata1;}
               color: ["#6ab92c", "#aed606", "#fef804", "#ff7b00", "#db253e", "#5b1875"],
             },
             seriesIndex: [2, 5],
-            right: "35%",
-            bottom: "20%",
+            left: "8%",
+            top: "10%",
             backgroundColor: "#ffffff",
           },
           {
@@ -1219,8 +1262,8 @@ piedata1=this.$store.state.gdGSpiedata1;}
               symbolSize: [7, 15],
             },
             seriesIndex: [0, 3],
-            right: "35%",
-            bottom: "20%",
+            left: "8%",
+            top: "10%",
             backgroundColor: "#ffffff",
           },
         ],
@@ -1418,6 +1461,7 @@ piedata1=this.$store.state.gdGSpiedata1;}
   },
   data() {
     return {
+      gdGS2data1:"",
       suo: false,
       color: "real",
       nowmethods: "",

@@ -183,9 +183,20 @@
       <q-select
         filled
         v-model="oldselect"
-        multiple
+ clearable
         :options="oldways"
         label="已有预设"
+        style="width: 250px"
+      />
+    </div>
+    <div>使用方案</div>
+    <div class="q-gutter-md row items-start">
+      <q-select
+        filled
+        v-model="fanganselect"
+
+        :options="fanganoption"
+        label="已有方案"
         style="width: 250px"
       />
     </div>
@@ -245,7 +256,8 @@
 </template>
 
 <script>
-
+import findArray  from '../utils/findwayArray';
+import addUniqueElements from '../utils/addUniqueElements';
 export default {
   name: 'Setting',
   mounted() {
@@ -501,24 +513,44 @@ export default {
     myChart.on("click", this.handleClick);
   },
   watch: {
+newway(newvalue, oldvalue) {
+  console.log(newvalue, oldvalue)
+}
+,
     company(newvalue, oldvalue) {
     this.realcomcar=this.rawcomcar[newvalue-1]
+
+    },
+    oldselect(newvalue, oldvalue) {
+      console.log(this.newway)
+      const myObject = this.newway.find(obj => obj.name === newvalue);
+      const index = this.tableData.findIndex(obj => obj === myObject);
+console.log(myObject)
+if (index === -1) {
+addUniqueElements(myObject.data,this.tableData )
+}
 
     },
   },
   methods: {
   upload()
-  {if(this.tableData.length==0||this.wayname=="")
+  {console.log(this.tableData)
+    if(this.tableData.length==0||this.wayname=="")
     {
 this.persistent1=true
       return
     }
-    const arr=[this.wayname]
+const  way={
+  name:this.wayname,
+  data: this.tableData.slice()
+}
 
-    let arr2 = [this.tableData]
-    let arr3 = arr.concat(arr2)
-    this.$store.state.newway=arr3
-    this.newway.push(arr3)
+this.oldways.push(this.wayname)
+
+
+    this.$store.state.newway=way
+    this.newway.push(way)
+    console.dir(this.newway)
   },
 chosepark(item){
 console.log(item)
@@ -594,6 +626,7 @@ let temp={car,park}
   if (!this.tableData.includes(temp)) {
     this.tableData.push(temp);
 }
+console.log(this.tableData)
 this.dialog=false
 },
 addcarpark2()
@@ -613,6 +646,10 @@ if(car==""||park=="")
 
   data() {
     return {
+      fanganselect:"",
+      fanganoption: ["全局优化", "偏好方案1", "偏好方案2"],
+      oldselect:"",
+
       persistent1:false,
       persistent:false,
       newway:[],
@@ -633,7 +670,7 @@ dialog:false,
 compark:"",
 comcar:"",
       oldways:[],
-      oldselect:"",
+
       wayname:"",
       isReadOnly:true,
       tableData: [],

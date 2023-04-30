@@ -1,7 +1,7 @@
 <template>
 <div>
 <card1></card1>
-<card2></card2>
+<card2 style="height:1000px;"></card2>
 
 </div>
 </template>
