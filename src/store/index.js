@@ -1,9 +1,20 @@
 import { createStore } from 'vuex'
 import {gap}from "~/store/modules/gap.js"
 import {GS2 } from "~/store/modules/GS2.js"
-
+import {data14} from "~/store/modules/diff14.js"
+import {data12} from "~/store/modules/diff12.js"
 const store = createStore({
   state: {
+	diffdata14:{
+		stationdata:data14.stationdata,
+		GSdata:data14.GSdata,
+		parkcapacity:data14.parkcapacity,
+	},
+	diffdata12:{
+		stationdata:data12.stationdata,
+		gdxdata:data12.gdxdata,
+		parkcapacity:data12.parkcapacity,
+	},
 	GS2piedata:GS2.GS2piedata,
 	gdGS2data:GS2.gdGS2data,
 	parkGS2data:GS2.parkGS2data,

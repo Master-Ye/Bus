@@ -343,6 +343,7 @@ return this.$store.state.group
         var heatmap_C_1 = myChart.getModel().getComponent("bmap").getBMap();
 
         const center = heatmap_C_1.getCenter();
+        var currentZoom = heatmap_C_1.getZoom();
         let i = params.dataIndex;
         if (i == null) return;
         let array = [];
@@ -351,7 +352,7 @@ return this.$store.state.group
         var option = {
           bmap: {
             center: [center.lng, center.lat], //  中心点
-            zoom: 12, //  放大倍数
+            zoom: currentZoom, //  放大倍数
             roam: true,
             mapStyle: {
               styleJson: [
@@ -614,10 +615,13 @@ return this.$store.state.group
         var myChart = echarts.init(document.getElementById("main"));
 
         var heatmap_C_1 = myChart.getModel().getComponent("bmap").getBMap();
-
-        const center = heatmap_C_1.getCenter();
+        var currentZoom = heatmap_C_1.getZoom();
+        const center1 = heatmap_C_1.getCenter();
         const concatenatedStr = "1" + this.group.toString();
-
+        const center={
+zoom:currentZoom,
+center:center1
+        }
         // 将拼接后的字符串转换为数字
         const result = parseInt(concatenatedStr);
         this.go1(result, center);
@@ -901,8 +905,8 @@ piedata1=this.$store.state.gdGS1piedata1;}
       if (center) {
         myChart.setOption({
           bmap: {
-            center: [center.lng, center.lat], //  中心点
-            zoom: 12, //  放大倍数
+            center: [center.center.lng, center.center.lat], //  中心点
+            zoom: center.zoom, //  放大倍数
             roam: true,
             mapStyle: {
               styleJson: [
@@ -1107,7 +1111,7 @@ piedata1=this.$store.state.gdGS1piedata1;}
       }
       myChart.setOption({
         bmap: {
-          center: [centerCity.lng, centerCity.lat], //  中心点
+          center: [centerCity.lng+0.05, centerCity.lat], //  中心点
           zoom: 12, //  放大倍数
           roam: true,
           mapStyle: {
