@@ -1,83 +1,7 @@
 <template>
-  <div class="flex flex-col justify-center " style="overflow: hidden;">
-    <div>
-      <span class="font-black">按分公司设置</span>
-      <div class="q-pa-md">
-        <div class="q-gutter-sm">
-          <q-radio
-            v-model="company"
-            checked-icon="task_alt"
-            unchecked-icon="panorama_fish_eye"
-            val="1"
-            label="一公司(1-)"
-            class="relative left-10"
-          />
-          <q-radio
-            v-model="company"
-            checked-icon="task_alt"
-            unchecked-icon="panorama_fish_eye"
-            val="2"
-            label="二公司(2-)"
-            class="relative left-20"
-          />
-          <q-radio
-            v-model="company"
-            checked-icon="task_alt"
-            unchecked-icon="panorama_fish_eye"
-            val="3"
-            label="三公司(3-)"
-            class="relative left-30"
-          />
-          <q-radio
-            v-model="company"
-            checked-icon="task_alt"
-            unchecked-icon="panorama_fish_eye"
-            val="4"
-            label="电车公司(6-)"
-            class="relative left-40"
-          />
-          <q-radio
-            v-model="company"
-            checked-icon="task_alt"
-            unchecked-icon="panorama_fish_eye"
-            val="5"
-            label="五公司(8-)"
-            class="relative left-50"
-          />
-          <q-radio
-            v-model="company"
-            checked-icon="task_alt"
-            unchecked-icon="panorama_fish_eye"
-            val="6"
-            label="六公司(7-)"
-            class="relative left-60"
-          />
-          <q-radio
-            v-model="company"
-            checked-icon="task_alt"
-            unchecked-icon="panorama_fish_eye"
-            val="7"
-            label="钱塘分公司(15-)"
-            class="relative left-70"
-          />
-        </div>
-      </div>
-      <q-select v-model="comcar" :options="realcomcar" style="width:250px;" class="inline-block relative left-60" label="请选择车辆">
-
-      </q-select>
-      <q-select v-model="compark" :options="rawcomparkoption" style="width:250px;" class="inline-block relative left-70" label="请选择停车场">
-
-</q-select>
-      <q-btn
-          color="primary"
-          label="加入预设条件"
-          style="height: 40px"
- class="relative left-95"
- @click="addcarpark1"
-        />
-    </div>
-    <div class="mt-5">
-      <span class="font-black">按车辆设置</span>
+  <div class="flex flex-col justify-center " style="overflow: hidden;width:1400px;">
+    <div class="mt-5 relative left-30">
+      <span class="font-black">Set by bus ID</span>
       <div class="q-pa-md flex-row flex relative left-50">
         <div class="q-gutter-md row items-center justify-center ml-30 left-8">
           <q-select
@@ -85,7 +9,7 @@
             v-model="ezcar"
             use-input
             input-debounce="0"
-            label="请输入车辆"
+            label="Enter a bus ID"
             :options="comcaroption"
             @filter="filterFn"
             style="width: 250px"
@@ -103,7 +27,7 @@
             v-model="ezpark"
             use-input
             input-debounce="0"
-            label="请输入停车场"
+            label="Enter a parking lot ID"
             :options="comparkoption"
             @filter="filterFn1"
             style="width: 250px"
@@ -124,14 +48,91 @@
         />
       </div>
     </div>
-    <div >
-      <div class="font-black">按停车场设置</div>
+    <div class="relative left-30">
+      <span class="font-black">Set by bus branch</span>
+      <div class="q-pa-md">
+        <div class="q-gutter-sm">
+          <q-radio
+            v-model="company"
+            checked-icon="task_alt"
+            unchecked-icon="panorama_fish_eye"
+            val="1"
+            label="Branch 1"
+            class="relative left-10"
+          />
+          <q-radio
+            v-model="company"
+            checked-icon="task_alt"
+            unchecked-icon="panorama_fish_eye"
+            val="2"
+            label="Branch 2"
+            class="relative left-20"
+          />
+          <q-radio
+            v-model="company"
+            checked-icon="task_alt"
+            unchecked-icon="panorama_fish_eye"
+            val="3"
+            label="Branch  3"
+            class="relative left-30"
+          />
+          <q-radio
+            v-model="company"
+            checked-icon="task_alt"
+            unchecked-icon="panorama_fish_eye"
+            val="4"
+            label="Trolley Branch"
+            class="relative left-40"
+          />
+          <q-radio
+            v-model="company"
+            checked-icon="task_alt"
+            unchecked-icon="panorama_fish_eye"
+            val="5"
+            label="Branch  5"
+            class="relative left-50"
+          />
+          <q-radio
+            v-model="company"
+            checked-icon="task_alt"
+            unchecked-icon="panorama_fish_eye"
+            val="6"
+            label="Branch  6"
+            class="relative left-60"
+          />
+          <q-radio
+            v-model="company"
+            checked-icon="task_alt"
+            unchecked-icon="panorama_fish_eye"
+            val="7"
+            label="Qiantang Branch"
+            class="relative left-70"
+          />
+        </div>
+      </div>
+      <q-select v-model="comcar" :options="realcomcar" style="width:250px;" class="inline-block relative left-60" label="Select a bus">
 
-        <div id="showpark" style="width: 1150px; height: 700px;vertical-align:top;" class="relative inline-block left-0 mt-5"></div>
+      </q-select>
+      <q-select v-model="compark" :options="rawcomparkoption" style="width:250px;" class="inline-block relative left-70" label="Select a parking lot">
+
+</q-select>
+      <q-btn
+          color="primary"
+          label="加入预设条件"
+          style="height: 40px"
+ class="relative left-95"
+ @click="addcarpark1"
+        />
+    </div>
+
+    <div class="relative left-30 " style="width:100%">
+      <div class="font-black">Set by parking lot</div>
+
+        <div id="showpark" style="width: 1110px; height: 700px;vertical-align:top;" class="relative inline-block left-0 mt-5"></div>
 
 
-      <span class="absolute  font-bold right-30">停车场名字:</span>
-      <div class="q-pa-md inline-block absolute right-10">
+      <span class="absolute  font-bold right-50">停车场名字:</span>
+      <div class="q-pa-md inline-block absolute ">
     <div class="q-gutter-md" style="max-width: 300px">
       <q-field  stack-label>
         <template v-slot:control>
@@ -142,17 +143,17 @@
     </div>
   </div>
 
-  <span class="absolute right-30 top-110 font-bold ">所含车辆:</span>
-      <div class="q-pa-md inline-block absolute right-10 top-113 h-8">
-    <div class="q-gutter-md h-8" style="max-width: 500px;height:100px;">
-      <q-list bordered separator style="height:300px; overflow:scroll;">
+  <span class="absolute right-50 top-50 font-bold ">所含车辆:</span>
+      <div class="q-pa-md inline-block absolute right-5 top-113 h-8">
+    <div class="q-gutter-md h-8 absolute right-45 bottom-40" style="max-width: 500px;height:100px;" >
+      <q-list bordered separator style="height:300px; overflow:scroll; ">
       <q-item clickable v-ripple v-for="item,index in parktobus[parkparkname]" :key="index"  @click="chosepark(item)">
         <q-item-section>{{item}}</q-item-section>
       </q-item>
       <q-dialog v-model="dialog" >
       <q-card style="width: 350px;height:150px;overflow:hidden;" class="flex justify-center items-center">
-        <span>请选择{{ tempcar }}的停车场</span>
-        <q-select v-model="temppark" :options="rawcomparkoption" style="width:300px;" class="inline-block relative " label="请选择停车场">
+        <span>Select {{ tempcar }} 's parking lot</span>
+        <q-select v-model="temppark" :options="rawcomparkoption" style="width:300px;" class="inline-block relative " label="Select a parking lot">
 </q-select>
 <q-btn color="primary" label="加入预设条件" @click="addcarpark3()"/>
       </q-card>
@@ -163,7 +164,7 @@
     </div>
   </div>
     </div>
-    <div>
+    <div class="relative left-30">
       <span>
       <div class="font-black mt-5">已有设置规则</div>
       <span>
@@ -448,7 +449,7 @@ export default {
             color: ["#6ab92c", "#aed606", "#fef804", "#ff7b00", "#db253e", "#5b1875"],
           },
           seriesIndex: [2, 5],
-          right: "35%",
+          right: "10%",
           bottom: "20%",
           backgroundColor: "#ffffff",
         },
@@ -510,6 +511,9 @@ export default {
         },
       ],
     });
+    var heatmap_C_1 = myChart.getModel().getComponent("bmap").getBMap();
+    heatmap_C_1.addControl(new BMap.NavigationControl());
+    heatmap_C_1.disableScrollWheelZoom()
     myChart.on("click", this.handleClick);
   },
   watch: {

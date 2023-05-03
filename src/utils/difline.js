@@ -1,4 +1,4 @@
- function line(data){
+ function line(data,index){
     var res = [];
     for(var i = 0;i<data.length;i++){
         var color,groupId;
@@ -6,7 +6,7 @@
             groupId = "原始方案",
             color = "#db253e"
         else
-            groupId = "偏好方案",
+            groupId = index==1?"全局优化方案":"偏好方案",
             color = "#6ab92c"
         res.push({
             coords: [data[i][0],data[i][2]],

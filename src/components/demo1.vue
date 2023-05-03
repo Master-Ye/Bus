@@ -1,5 +1,5 @@
 <template>
-  <div style="overflow:hidden;">
+  <div style="overflow:hidden;" class="relative left-20">
     <div class="q-pa-md relative left-120 bottom-0 z-50 w-100">
       <div class="q-gutter-sm">
         <q-radio v-model="value" val="1" label="城市停车分配" />
@@ -13,12 +13,16 @@
     </div>-->
 
     <div class="flex justify-between left-20 relative bottom-30">
-      <div id="main" style="width: 1200px; height: 700px" class="main mt-0"></div>
+      <div id="main" style="width: 1200px; height: 700px" class="main mt-0">
+
+      </div>
+
     </div>
   </div>
 </template>
 
 <script>
+
 import parkparkpointdata from "../utils/parkparkpointdata.js";
 import line from "../utils/line.js";
 import parkstationpointdata from "../utils/parkstationpointdata.js";
@@ -28,7 +32,12 @@ import * as echarts from "echarts";
 export default {
   watch:{
     group(newgroup) {
-
+if(this.value==2&&newgroup!=1){
+  this.tuli=true
+}
+else{
+  this.tuli=false
+}
       this.$store.state.nowway = newgroup;
       if (this.group == 1) {
         if (this.value == 1) {
@@ -75,6 +84,13 @@ export default {
       }
     },
     value(newvalue) {
+      if(newvalue==2&&this.group!=1)
+{
+this.tuli=true
+}
+else{
+  this.tuli=false
+}
       const concatenatedStr = newvalue.toString() + this.group;
       const result = parseInt(concatenatedStr);
       if (this.value == 1) {
@@ -328,6 +344,8 @@ return this.$store.state.group
     heatmap_C_1.addControl(new BMap.NavigationControl());
     console.log(heatmap_C_1.getCenter());
     myChart.on("click", this.handleClick);
+
+    heatmap_C_1.disableScrollWheelZoom()
   },
   methods: {
     changeZhu(value) {},
@@ -610,6 +628,9 @@ return this.$store.state.group
             },
           ],
         });
+        var heatmap_C_1 = myChart.getModel().getComponent("bmap").getBMap();
+    heatmap_C_1.addControl(new BMap.NavigationControl());
+    heatmap_C_1.disableScrollWheelZoom()
       } else {
         this.suo = false;
         var myChart = echarts.init(document.getElementById("main"));
@@ -661,7 +682,50 @@ piedata1=this.$store.state.gdGS1piedata1;}
       var myChart = echarts.init(document.getElementById("main"));
       myChart.clear();
 
-      for (var i = 0; i < piedata.length; i++) {
+
+      if(piedata1.length!=0){
+      for(var i =0;i<piedata1.length;i++){
+				let temp = {
+					center: piedata1[i][0],
+				 color:["#94ca72","#546fc6"],
+					coordinateSystem: 'bmap',
+					data: [
+						{name: 'Bus unchanged', value: piedata1[i][2]},
+						{name: 'Bus changed', value: piedata1[i][3]}
+					],
+					label:{
+						show: false
+					},
+					name: piedata1[i][1]+'('+(piedata1[i][2]+piedata1[i][3]).toString()+')',
+					radius: (piedata1[i][2]+piedata1[i][3]-1)/(621-1)*10+5,
+					type: 'pie'
+				}
+
+				res.push(temp)}
+        for(var i =0;i<piedata1.length;i++){
+				let temp = {
+					center: piedata1[i][0],
+				 color:"white",
+					coordinateSystem: 'bmap',
+					data: [
+						{name: '', value:1},
+
+					],
+          tooltip: {
+    show: false
+  },
+					label:{
+						show: false
+					},
+					name: piedata1[i][1]+'('+(piedata1[i][2]+piedata1[i][3]).toString()+')',
+					radius: [(piedata1[i][2]+piedata1[i][3]-1)/(621-1)*10+5,(piedata1[i][2]+piedata1[i][3]-1)/(621-1)*10+6],
+					type: 'pie'
+				}
+
+				res.push(temp)}
+      }
+
+        for (var i = 0; i < piedata.length; i++) {
         var data = [];
         for (var j = 2; j < piedata[i].length; j++) {
           data.push({
@@ -671,13 +735,16 @@ piedata1=this.$store.state.gdGS1piedata1;}
         }
         let temp = {
           color: [
-          "#546fc6",
-          "#91cc75",
-          "#fac858",
-          "#ee6666",
+            "#fac858",
+          "#F72C5B",
           "#9a60b4",
-          "#3ba272",
           "#73c0de",
+          "#ff84c1",
+          "#fd7f52",
+
+
+          "#3ba272",
+
 
         ],
           center: piedata[i][0],
@@ -691,32 +758,12 @@ piedata1=this.$store.state.gdGS1piedata1;}
             "(" +
             this.$store.state.rawparkcapacity[i][2].toString() +
             ")",
-          radius: [piedata1.length==0?2:(piedata1[i][2]+piedata1[i][3]-1)/(621-1)*10+5, piedata1.length==0?((this.$store.state.rawparkcapacity[i][2] - 1) / (621 - 1)) * 10 + 7:((piedata1[i][2]+piedata1[i][3]-1)/(621-1)*10+5+((this.$store.state.rawparkcapacity[i][2] - 1) / (621 - 1)) * 10 + 7)/1.2],
+          radius: piedata1.length==0?((this.$store.state.rawparkcapacity[i][2] - 1) / (621 - 1)) * 10 + 7:[(piedata1[i][2]+piedata1[i][3]-1)/(621-1)*10+6,((piedata1[i][2]+piedata1[i][3]-1)/(621-1)*10+5+((this.$store.state.rawparkcapacity[i][2] - 1) / (621 - 1)) * 10 + 7)/1.2],
           type: "pie",
         };
         res.push(temp);
 
-        console.log(temp.radius[0]);
       }
-      if(piedata1.length!=0){
-      for(var i =0;i<piedata1.length;i++){
-				let temp = {
-					center: piedata1[i][0],
-				 color:["#ff85c0","#FF7F50"],
-					coordinateSystem: 'bmap',
-					data: [
-						{name: '未改变', value: piedata1[i][2]},
-						{name: '改变', value: piedata1[i][3]}
-					],
-					label:{
-						show: false
-					},
-					name: piedata1[i][1]+'('+(piedata1[i][2]+piedata1[i][3]).toString()+')',
-					radius: [2,(piedata1[i][2]+piedata1[i][3]-1)/(621-1)*10+5],
-					type: 'pie'
-				}
-
-				res.push(temp)}}
       let option = {
 
 
@@ -841,24 +888,44 @@ piedata1=this.$store.state.gdGS1piedata1;}
             ],
           },
         },
-        legend: {
+        legend: [{
+          data: ["Bus changed", "Bus unchanged"],
+          backgroundColor: '#fff',
           orient: "vertical",
-          left: "8%",
+          right: "10%",
+          bottom:"26%",
           itemStyle: {
-            borderColor: "#000000",
+            borderColor: 'transparent',
           },
           textStyle: {
             fontSize: 15,
-            backgroundColor: "#ffffff",
+
           },
-          top: "top",
+
         },
+      {
+        data:["Branch 1","Branch 2","Branch  3","Trolley Branch","Branch  5","Branch  6","Qiantang Branch"] ,
+        backgroundColor: '#fff',
+          orient: "vertical",
+          right: "25%",
+          itemStyle: {
+            borderColor: 'transparent',
+          },
+          textStyle: {
+            fontSize: 15,
+
+          },
+bottom:"8%"
+      }],
         tooltip: {
           show: true,
         },
         series: res, // 饼图数据列
       };
       myChart.setOption(option);
+      var heatmap_C_1 = myChart.getModel().getComponent("bmap").getBMap();
+    heatmap_C_1.addControl(new BMap.NavigationControl());
+    heatmap_C_1.disableScrollWheelZoom()
     },
     go1(value, center) {
       this.changeZhu(value);
@@ -1042,7 +1109,7 @@ piedata1=this.$store.state.gdGS1piedata1;}
               ],
               calculable: true,
               inRange: {
-                color: ["#6ab92c", "#aed606", "#fef804", "#ff7b00", "#db253e", "#5b1875"],
+                color: ["#6ab92c", "#aed606", "#fef804", "#ffc000", "#ffff01", "#92d14f"],
               },
               seriesIndex: [2, 5],
               right: "35%",
@@ -1252,8 +1319,8 @@ piedata1=this.$store.state.gdGS1piedata1;}
               color: ["#6ab92c", "#aed606", "#fef804", "#ff7b00", "#db253e", "#5b1875"],
             },
             seriesIndex: [2, 5],
-            left: "8%",
-            top: "10%",
+            right: "20%",
+            bottom: "10%",
             backgroundColor: "#ffffff",
           },
           {
@@ -1314,6 +1381,13 @@ piedata1=this.$store.state.gdGS1piedata1;}
           },
         ],
       });
+      var heatmap_C_1 = myChart.getModel().getComponent("bmap").getBMap();
+    heatmap_C_1.addControl(new BMap.NavigationControl());
+    heatmap_C_1.disableScrollWheelZoom()
+    heatmap_C_1.addEventListener("dragend", function() {
+  // 在拖拽结束时重新启用鼠标滚轮缩放
+  heatmap_C_1.disableScrollWheelZoom();
+});
     },
     go3(value1, value2) {
       this.changeZhu(value2);
@@ -1436,6 +1510,9 @@ piedata1=this.$store.state.gdGS1piedata1;}
           },
         ],
       });
+      var heatmap_C_1 = myChart.getModel().getComponent("bmap").getBMap();
+    heatmap_C_1.addControl(new BMap.NavigationControl());
+    heatmap_C_1.disableScrollWheelZoom()
     },
     handleChange(value) {
       console.log(value[0], value[1], value[2]);
@@ -1465,6 +1542,8 @@ piedata1=this.$store.state.gdGS1piedata1;}
   },
   data() {
     return {
+
+
       gdGS2data1:"",
       suo: false,
       color: "real",

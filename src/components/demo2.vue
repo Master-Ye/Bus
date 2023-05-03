@@ -6,7 +6,7 @@
 
 
         </dv-decoration-11> -->
-<v-chart :option="option" style="height:300px;width:400px"  ></v-chart></div>
+<v-chart :option="option" style="height:300px;width:700px"  ></v-chart></div>
 </template>
 
 <script>
@@ -44,15 +44,15 @@ data(){
 option:{
 
   title : {
-        text: '花费里程',
-        subtext: '单位:万米'
+        text: '车辆数',
+
     },
     backgroundColor:'rgba(0,0,0,0)',
     tooltip : {
         trigger: 'axis'
     },
     legend: {
-        data:['花费里程']
+        data:['车辆数']
     },
     color:'#1e85ab',
     toolbox: {
@@ -66,9 +66,9 @@ option:{
     },
     calculable : true,
     xAxis : [
-        {name:"车辆id",
+        {name:"距离(KM)",
             type : 'category',
-            data :['1-x','2-x','3-x','6-x','7-x','8-x','15-x']
+            data :['0-5','5-10','10-15','15-20','20-25','25-30','30-35','35-40','<40']
         }
     ],
 
@@ -79,11 +79,11 @@ option:{
     ],
     series : [
         {
-            name:'花费里程',
+            name:'车辆数',
             type:'bar',
             label:{show:true,position:'top'},
 
-            data:[604.1864, 1097.2976, 867.8798, 1130.6751, 1048.0930, 1320.5689, 14.2929]
+            data:[361, 832, 749, 608, 441, 378, 158, 92, 109]
 ,
             barWidth:38,
            /* markLine : {

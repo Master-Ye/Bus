@@ -1,11 +1,13 @@
 <template>
+
   <q-splitter
     v-model="splitterModel"
     style="height: 1500px; width: 400px;overflow:hidden;"
-    class="fixed left-0 top-0 "
+    class="fixed left-0 top-0 m-0"
+    align="left"
   >
     <template v-slot:before>
-      <q-tabs v-model="group" vertical class="bg-grey-2" align="center" style="width:130px;">
+      <q-tabs v-model="group" vertical class="bg-grey-2 text-left " align="left" style="width:222px;">
         <q-tab
           v-for="item in optionsone"
           :key="item.value"
@@ -16,10 +18,12 @@
           :disable="item.disable"
           @click="push(item.value)"
 
+
         />
       </q-tabs>
     </template>
   </q-splitter>
+
 </template>
 
 <script>
@@ -28,15 +32,15 @@ export default {
     return {index1:7,
       index2:5,
       optionsone: [
-        { label: "历史方案", value: 0, disable:true},
-        { label: "原始方案", value: 1, class: " square1", icon: "trip_origin" },
-        { label: "全局优化方案", value: 2, class: "square2", icon: "check_circle" },
-        { label: "考虑偏好方案1", value: 3, class: "square3", icon: "favorite" },
-        { label: "考虑偏好方案2", value: 4, class: "square4", icon: "favorite",style:" border-bottom: 1px solid black;" },
-        { label: "预设条件", value: 0, disable:true},
-        { label: "新建方案", value: 5, class: "", icon: "add_circle_outline", style:" border-bottom: 1px solid black;"},
-        { label: "方案比较", value: 0, disable:true},
-        { label: "不同方案比较", value: 6, class: "", icon: "view_list",style:" border-bottom: 1px solid black;" },
+        { label: "Scheme list", value: 0, disable:true,style:"text-align:left;" ,contentClass:"text-base "},
+        { label: "Original scheme", value: 1, class: " square1 " ,style:"justify-content: flex-start;" },
+        { label: "Global optimization scheme", value: 2, class: "square2", icon: "check_circle",style:"justify-content: flex-start;" },
+        { label: "Preference scheme 1", value: 3, class: "square3", icon: "favorite",style:"justify-content: flex-start;" },
+        { label: "Preference scheme 2", value: 4, class: "square4", icon: "favorite",style:" border-bottom: 1px solid black;",style:"justify-content: flex-start;" },
+        { label: "Precondition list", value: 0, disable:true,style:" border-bottom: 1px solid black;"},
+        { label: "New scheme", value: 5, class: "", icon: "add_circle_outline", style:" border-bottom: 1px solid black;"},
+
+        { label: "Compare schemes", value: 6, class: "", icon: "view_list",style:" border-bottom: 1px solid black;" },
 
       ],
       group: null,

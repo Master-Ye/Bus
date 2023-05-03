@@ -1,5 +1,5 @@
 <template>
-<div ref="paimingtable" style="height:200px;"></div>
+<div ref="paimingtable" style="height:200px;width:650px;"></div>
 </template>
 
 <script>
@@ -13,15 +13,18 @@ const  table=this.$refs.paimingtable
 
 
 const arr = [];
-const licheng=[0,14190,5540,5540]
-const bili=[0,23,9,9]
+const licheng=[60687008,46529978,55144813,58747392]
+const lichengdown=[0,14157030,5542195,1939616]
+const bili=[0,23,9,3]
+const parkbili=[0,58,49,6]
 const cats = ['原始方案', '全局优化', '偏好算法1','偏好算法2'];
 for (let i = 0; i < 4; ++i) {
   arr.push({
     方案: cats[i],
-    减少空驶里程_km: licheng[i],
+总里程_km:licheng[i],
+    减少空驶里程_km: lichengdown[i],
     减少空程比例: bili[i],
-    改变停车场比例: Math.random() * 10,
+    改变停车场比例: parkbili[i],
 
 
 
@@ -32,7 +35,8 @@ const builder = LineUpJS.builder(arr);
 // manually define columns
 builder
 .column(LineUpJS.buildCategoricalColumn('方案', cats).color('red'))
-  .column(LineUpJS.buildNumberColumn('减少空驶里程_km', [0, 20000]).color('blue'))
+.column(LineUpJS.buildNumberColumn('总里程_km', [0, 100000000]).color('blue'))
+  .column(LineUpJS.buildNumberColumn('减少空驶里程_km', [0, 20000000]).color('blue'))
 
 
   .column(LineUpJS.buildNumberColumn('减少空程比例', [0, 100]).color('blue'))
@@ -52,6 +56,8 @@ const lineup = builder.buildTaggle(table);
 }
 </script>
 
-<style>
-
+<style >
+::-webkit-scrollbar {
+  display: none;
+}
 </style>

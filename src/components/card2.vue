@@ -14,7 +14,7 @@
         <q-card-section>
           <q-row>
             <q-col style="display: inline-block">
-              <span>请选择方案</span>
+              <span>请选择第一个方案</span>
               <q-select
                 v-model="selectedValue1"
                 :options="options1"
@@ -22,6 +22,17 @@
                 style="display: inline-block; width: 170px"
                 class="relative left-3"
               />
+              <span class="relative left-10">请选择第二个方案</span>
+              <q-select
+                v-model="selectedValue2"
+                :options="options1"
+                label="Select 2"
+                style="display: inline-block; width: 170px"
+                class="relative left-15"
+              />
+<span class="relative left-90 text-center">只显示超过<q-input v-model="text"  style="display: inline-block; width: 50px" />KM的数据</span>
+
+
             </q-col>
 
             <q-col
@@ -38,6 +49,9 @@
 </template>
 
 <script>
+import kmselect from "../utils/kmselect.js";
+import difparkpointdata from "../utils/difparkpointdata.js";
+import parkstationpointdata from "../utils/parkstationpointdata.js";
 import line from "../utils/difline.js";
 export default {
   mounted() {
@@ -172,9 +186,11 @@ export default {
     myChart.setOption(option);
     var heatmap_C_1 = myChart.getModel().getComponent("bmap").getBMap();
     heatmap_C_1.addControl(new BMap.NavigationControl());
+    heatmap_C_1.disableScrollWheelZoom()
   },
   data() {
     return {
+      text:0,
       options1: [
         { label: "全局优化", value: 1 },
         { label: "偏好方案1", value: 2 },
@@ -185,46 +201,19 @@ export default {
     };
   },
   computed: {
-    parkpointdata() {
-      var res = [];
-      for (var i = 0; i < this.$store.state.diffdata14.parkcapacity.length; i++) {
-        res.push({
-          name: this.$store.state.diffdata14.parkcapacity[i][1],
-          value: this.$store.state.diffdata14.parkcapacity[i][0].concat(
-            this.$store.state.diffdata14.parkcapacity[i][2]
-          ),
-        });
-      }
-      return res;
-    },
-    stationpointdata() {
-      var res = [];
-      for (var i = 0; i < this.$store.state.diffdata14.stationdata.length; i++) {
-        res.push({
-          name: this.$store.state.diffdata14.stationdata[i][1],
-          value: this.$store.state.diffdata14.stationdata[i][0],
-        });
-      }
-      return res;
-    },
+
+
   },
-  methods: {},
-  watch: {
-    selectedValue1(newvalue) {
-      console.log(newvalue.value);
-      let linedata = [];
-      switch (newvalue.value) {
-        case 3: {
-          console.log("111");
-          linedata = line(this.$store.state.diffdata14.GSdata);
-        }
-      }
-      let centerCity = mapv.utilCityCenter.getCenterByCityName("杭州");
+  methods: {
+go(parkpointdata,stationpointdata,linedata,index,limit)
+{
+  const linedata1=kmselect(linedata,limit)
+let tuli=[["原始方案", "全局优化方案"],["原始方案", "偏好方案1"],["原始方案", "偏好方案2"]]
+let tulicolor=[["#1f77b4","#ff7f0e"], ["#1f77b4","#2ca02c"], ["#1f77b4","#d62728"]]
+  let centerCity = mapv.utilCityCenter.getCenterByCityName("杭州");
       var myChart = echarts.init(document.getElementById("main111"));
       myChart.clear();
-      const parkpointdata = this.parkpointdata;
 
-      const stationpointdata = this.stationpointdata;
 
       myChart.setOption({
         tooltip: {
@@ -358,9 +347,9 @@ formatter: '{b}:{c}'
           {
             type: "piecewise",
             dimension: 1,
-            categories: ["原始方案", "偏好方案"],
+            categories: tuli[index],
             inRange: {
-              color: ["#db253e", "#6ab92c"],
+              color: tulicolor[index],
             },
             seriesIndex: 2,
             right: "35%",
@@ -372,7 +361,7 @@ formatter: '{b}:{c}'
           {
             type: "scatter",
             coordinateSystem: "bmap",
-            data: parkpointdata,
+            data: difparkpointdata(parkpointdata),
             symbolSize: 8,
             encode: {
               value: 2,
@@ -385,7 +374,7 @@ formatter: '{b}:{c}'
           {
             type: "scatter",
             coordinateSystem: "bmap",
-            data: stationpointdata,
+            data: parkstationpointdata(stationpointdata),
             symbolSize: 3,
             encode: {
               value: 2,
@@ -399,13 +388,81 @@ formatter: '{b}:{c}'
             name: "匈牙利",
             type: "lines",
             coordinateSystem: "bmap",
-            data: linedata,
+            data: line(linedata1,index+1),
             symbol: ["none", "arrow"],
             symbolSize: [0, [6, 20]],
           },
         ],
       });
+      var heatmap_C_1 = myChart.getModel().getComponent("bmap").getBMap();
+    heatmap_C_1.addControl(new BMap.NavigationControl());
+    heatmap_C_1.disableScrollWheelZoom()
+}
+  },
+  watch: {
+    selectedValue1(newvalue) {
+      console.log(newvalue.value);
+      let linedata = [];
+      let parkpointdata = [];
+      let stationpointdata = [];
+      switch (newvalue.value) {
+        case 1: {
+
+          linedata = this.$store.state.diffdata12.gdxdata;
+          parkpointdata=this.$store.state.diffdata12.parkcapacity;
+          stationpointdata=this.$store.state.diffdata12.stationdata;
+        }
+        break
+        case 2: {
+          console.log("111");
+          linedata = this.$store.state.diffdata13.GSdata;
+          parkpointdata=this.$store.state.diffdata13.parkcapacity;
+          stationpointdata=this.$store.state.diffdata13.stationdata;
+        }
+        break
+        case 3: {
+          console.log("111");
+          linedata = this.$store.state.diffdata14.GS2data;
+          parkpointdata=this.$store.state.diffdata14.parkcapacity;
+          stationpointdata=this.$store.state.diffdata14.stationdata;
+        }
+        break
+      }
+this.go(parkpointdata,stationpointdata,linedata,newvalue.value-1,this.text);
+
+
     },
+  text(newvalue)
+  {
+    let linedata = [];
+      let parkpointdata = [];
+      let stationpointdata = [];
+      switch (this.selectedValue1.value) {
+        case 1: {
+
+          linedata = this.$store.state.diffdata12.gdxdata;
+          parkpointdata=this.$store.state.diffdata12.parkcapacity;
+          stationpointdata=this.$store.state.diffdata12.stationdata;
+        }
+        break
+        case 2: {
+          console.log("111");
+          linedata = this.$store.state.diffdata13.GSdata;
+          parkpointdata=this.$store.state.diffdata13.parkcapacity;
+          stationpointdata=this.$store.state.diffdata13.stationdata;
+        }
+        break
+        case 3: {
+          console.log("111");
+          linedata = this.$store.state.diffdata14.GS2data;
+          parkpointdata=this.$store.state.diffdata14.parkcapacity;
+          stationpointdata=this.$store.state.diffdata14.stationdata;
+        }
+        break
+      }
+this.go(parkpointdata,stationpointdata,linedata,newvalue.value-1,newvalue);
+
+  }
   },
 };
 </script>

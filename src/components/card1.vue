@@ -16,15 +16,15 @@
 
       <q-separator />
 
-      <q-card-section horizontal >
+      <q-card-section horizontal cols="6">
         <q-card-section>
-       <table1 class="relative top-5 right-2"></table1>
+       <table1 class="relative top-5 right-10"></table1>
        <sandian class="relative left-25"></sandian>
         </q-card-section>
 
         <q-separator vertical />
 
-        <q-card-section class="col-7">
+        <q-card-section cols="6">
         <comparezhu></comparezhu>
         </q-card-section>
       </q-card-section>
