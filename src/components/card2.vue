@@ -191,6 +191,7 @@ export default {
   },
   data() {
     return {
+      index:"",
       linedata: [],
      parkpointdata : [],
      stationpointdata : [],
@@ -215,39 +216,62 @@ options2(){
   },
   methods: {
   compare(){
-let index=0
+
 if(this.selectedValue1==null||this.selectedValue2==null||(this.selectedValue1==this.selectedValue2))
 {return}
 if(this.selectedValue1.value+this.selectedValue2.value==1)
 {
-  this.linedata = this.$store.state.diffdata12.gdxdata;
+  this.linedata = this.$store.state.diffdata12.data;
           this.parkpointdata=this.$store.state.diffdata12.parkcapacity;
           this.stationpointdata=this.$store.state.diffdata12.stationdata;
-index=1
+this.index=1
 }
 if(this.selectedValue1.value+this.selectedValue2.value==2)
 {
-  this.linedata = this.$store.state.diffdata13.GSdata;
+  this.linedata = this.$store.state.diffdata13.data;
           this.parkpointdata=this.$store.state.diffdata13.parkcapacity;
           this.stationpointdata=this.$store.state.diffdata13.stationdata;
-          index=2
+          this.index=2
 }
 if(this.selectedValue1.value+this.selectedValue2.value==3)
-{if(this.selectedValue1==0||this.selectedValue2==0)
-  { this.linedata = this.$store.state.diffdata14.GS2data;
+{if(this.selectedValue1.value==0||this.selectedValue2.value==0)
+  { this.linedata = this.$store.state.diffdata14.data;
     this.parkpointdata=this.$store.state.diffdata14.parkcapacity;
     this.stationpointdata=this.$store.state.diffdata14.stationdata;
-  index=3}
+    this.index=3}
+  else{
+    this.linedata = this.$store.state.diffdata23.data;
+    this.parkpointdata=this.$store.state.diffdata23.parkcapacity;
+    this.stationpointdata=this.$store.state.diffdata23.stationdata;
+    this.index=4
+  }
 }
-this.go(this.parkpointdata,this.stationpointdata,this.linedata,index-1,this.text);
+if(this.selectedValue1.value+this.selectedValue2.value==4)
+{
+  this.linedata = this.$store.state.diffdata24.data;
+    this.parkpointdata=this.$store.state.diffdata24.parkcapacity;
+    this.stationpointdata=this.$store.state.diffdata24.stationdata;
+    this.index=5
+}
+if(this.selectedValue1.value+this.selectedValue2.value==5)
+{
+  this.linedata = this.$store.state.diffdata34.data;
+    this.parkpointdata=this.$store.state.diffdata34.parkcapacity;
+    this.stationpointdata=this.$store.state.diffdata34.stationdata;
+    this.index=6
+    console.log(this.linedata)
+}
+this.go(this.parkpointdata,this.stationpointdata,this.linedata,this.index-1,this.text);
 
 
   },
 go(parkpointdata,stationpointdata,linedata,index,limit)
 {
+  console.log(linedata)
   const linedata1=kmselect(linedata,limit)
-let tuli=[["原始方案", "全局优化方案"],["原始方案", "偏好方案1"],["原始方案", "偏好方案2"]]
-let tulicolor=[["#1f77b4","#ff7f0e"], ["#1f77b4","#2ca02c"], ["#1f77b4","#d62728"]]
+
+let tuli=[["原始方案","全局优化方案"],["原始方案","偏好方案1"],["原始方案","偏好方案2"],["全局优化方案","偏好方案1"],["全局优化方案","偏好方案2"],["偏好方案1","偏好方案2"]]
+let tulicolor=[["#2764a5","#eb7f21"],["#2764a5","#379c3a"],["#2764a5","#c83537"],["#eb7f21","#379c3a"],["#eb7f21","#c83537"],["#379c3a","#c83537"]]
   let centerCity = mapv.utilCityCenter.getCenterByCityName("杭州");
       var myChart = echarts.init(document.getElementById("main111"));
       myChart.clear();
@@ -426,7 +450,7 @@ formatter: '{b}:{c}'
             name: "匈牙利",
             type: "lines",
             coordinateSystem: "bmap",
-            data: line(linedata1,index+1),
+            data: line(linedata1,index),
             symbol: ["none", "arrow"],
             symbolSize: [0, [6, 20]],
           },
@@ -443,7 +467,7 @@ formatter: '{b}:{c}'
   text(newvalue)
   {
 
-this.go(this.parkpointdata,this.stationpointdata,this.linedata,newvalue.value-1,newvalue);
+this.go(this.parkpointdata,this.stationpointdata,this.linedata,this.index-1,newvalue);
 
   }
   },

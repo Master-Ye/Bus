@@ -1,5 +1,5 @@
 <template>
-<v-chart :option="options" style="width:500px;" />
+<v-chart :option="options" style="width:600px;height:388px;" />
 </template>
 
 <script>
@@ -8,7 +8,8 @@ data(){
     return {
         options:{
                     title: {
-                        text: '车辆里程对比',
+                        top:"0%",
+                        text: 'Car num',
                     },
                     tooltip: {
                         trigger: 'axis',
@@ -18,20 +19,22 @@ data(){
                     },
                     legend: {
                         data: [
-                            '原始方案',
-'全局优化','偏好方案1','偏好方案2',],
-right:10
+                            'ORIGINAL',
+'Global optimization','Preference1','Preference2',],
+right:50,
+top:17,
                     },
                     grid: {
-                        left: '3%',
-                        right: '4%',
+                        left: '0%',
+                        right: '17%',
                         bottom: '3%',
                         containLabel: true
                     },
                     xAxis: [
                         {
                             type: 'category',
-                            data: ['1-x','2-x','3-x','6-x','7-x','8-x','15-x']
+                            data: ['0-5','5-10','10-15','15-20','20-25','25-30','30-35',"35-40","<40"],
+                            name:"Range(km)",
                         }
                     ],
                     yAxis: [
@@ -41,27 +44,27 @@ right:10
                     ],
                     series: [
                         {
-                            name: '原始方案',
+                            name: 'ORIGINAL',
                             type: 'bar',
-                            data: [6041864, 10972976, 8678798, 11306751, 10480930, 13205689, 142929],
+                            data: [361, 832, 749, 608, 441, 378, 158, 92, 109],
                             color:"#1f77b4"
                         },
                         {
-                            name: '全局优化',
+                            name: 'Global optimization',
                             type: 'bar',
-                            data: [5805635, 7835047, 8335704, 7858681, 8814171, 7880740, 102856],
+                            data: [573, 891, 935, 715, 423, 112, 58, 13, 8],
                             color:"#ff7f0e"
                         },
                         {
-                            name: '偏好方案1',
+                            name: 'Preference1',
                             type: 'bar',
-                            data: [5773447, 10618052, 8181671, 10354149, 9624149, 10593345, 142929],
+                            data: [553, 806, 812, 571, 472, 157, 162, 98, 97],
                             color:"#2ca02c"
                         },
                         {
-                            name: '偏好方案2',
+                            name: 'Preference2',
                             type: 'bar',
-                            data: [5869975, 10536684, 8608632, 10926790, 10289569, 12515742, 108833],
+                            data: [453, 806, 731, 602, 430, 372, 153, 89, 92],
                             color:"#d62728"
                         }
 

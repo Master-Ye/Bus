@@ -16,6 +16,10 @@ export default {
 nowwm(newVal){
     this.option.series[0].data=newVal
 
+},
+nowway(newvalue){
+let arr=["#2764a5","#fa7901","#379c3a","#c83537"]
+this.option.color=arr[newvalue-1]
 }
 
     },
@@ -27,6 +31,9 @@ let result=parseInt(this.$store.getters.nowwmgap)
 },
 nowwm() {
     return this.$store.state.truewm
+},
+nowway(){
+    return this.$store.state.nowway
 }
 },
 data(){

@@ -1,6 +1,6 @@
 <template>
 
-<v-chart :option="options111"  style="height:300px;width:400px;" autoresize ></v-chart>
+<v-chart :option="options111"  style="height:300px;width:300px;" autoresize ></v-chart>
 
 </template>
 

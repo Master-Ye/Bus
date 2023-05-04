@@ -16,17 +16,13 @@
 
       <q-separator />
 
-      <q-card-section horizontal cols="6">
+      <q-card-section horizontal >
         <q-card-section>
-       <table1 class="relative top-5 right-10"></table1>
-       <sandian class="relative left-25"></sandian>
-        </q-card-section>
+       <table1 class="relative bottom-70 right-10 inline-block"></table1>
+       <sandian class="relative left-20 inline-block bottom-10"></sandian>
 
-        <q-separator vertical />
 
-        <q-card-section cols="6">
-        <comparezhu></comparezhu>
-        </q-card-section>
+        <comparezhu class="relative bottom-72 left-70"></comparezhu>  </q-card-section>
       </q-card-section>
     </q-card>
 

@@ -36,9 +36,9 @@ export default {
         { label: "Original scheme", value: 1, class: " square1 " ,style:"justify-content: flex-start;" },
         { label: "Global optimization scheme", value: 2, class: "square2", icon: "check_circle",style:"justify-content: flex-start;" },
         { label: "Preference scheme 1", value: 3, class: "square3", icon: "favorite",style:"justify-content: flex-start;" },
-        { label: "Preference scheme 2", value: 4, class: "square4", icon: "favorite",style:" border-bottom: 1px solid black;",style:"justify-content: flex-start;" },
-        { label: "Precondition list", value: 0, disable:true,style:" border-bottom: 1px solid black;"},
-        { label: "New scheme", value: 5, class: "", icon: "add_circle_outline", style:" border-bottom: 1px solid black;"},
+        { label: "Preference scheme 2", value: 4, class: "square4", icon: "favorite",style:" ",style:"justify-content: flex-start;" },
+        { label: "Precondition list", value: 0, disable:true,style:"  border-top: 1px solid black;"},
+        { label: "New scheme", value: 5, class: "", icon: "add_circle_outline", style:" border-bottom: 1px solid black;border-top: 1px solid black;"},
 
         { label: "Compare schemes", value: 6, class: "", icon: "view_list",style:" border-bottom: 1px solid black;" },
 

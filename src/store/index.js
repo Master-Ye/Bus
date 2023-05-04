@@ -4,21 +4,39 @@ import {GS2 } from "~/store/modules/GS2.js"
 import {data13} from "~/store/modules/diff13.js"
 import {data12} from "~/store/modules/diff12.js"
 import {data14} from "~/store/modules/diff14.js"
+import {data23} from "~/store/modules/diff23.js"
+import {data24} from "~/store/modules/diff24.js"
+import {data34} from "~/store/modules/diff34.js"
 const store = createStore({
   state: {
 	diffdata13:{
 		stationdata:data13.stationdata,
-		GSdata:data13.GSdata,
+		data:data13.GSdata,
 		parkcapacity:data13.parkcapacity,
 	},
+	diffdata23:{
+stationdata:data23.stationdata,
+		data:data23.dif23data,
+		parkcapacity:data23.parkcapacity,
+	},
+	diffdata24:{
+		stationdata:data24.stationdata,
+		data:data24.dif24data,
+		parkcapacity:data24.parkcapacity,
+			},
+	diffdata34:{
+		stationdata:data34.stationdata,
+		data:data34.dif34data,
+		parkcapacity:data34.parkcapacity,
+		},
 	diffdata14:{
 		stationdata:data14.stationdata,
-		GS2data:data14.GS2data,
+		data:data14.GS2data,
 		parkcapacity:data14.parkcapacity,
 	},
 	diffdata12:{
 		stationdata:data12.stationdata,
-		gdxdata:data12.gdxdata,
+		data:data12.gdxdata,
 		parkcapacity:data12.parkcapacity,
 	},
 	GS2piedata:GS2.GS2piedata,
