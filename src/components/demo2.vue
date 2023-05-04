@@ -1,12 +1,12 @@
 <template>
-    <div class=" mb-10">
+    <div class=" mb-10 " >
     <!--    <dv-decoration-11 style="width:300px;height:100px;" class="dvde">
 
   <dv-digital-flop :config="config1" />
 
 
         </dv-decoration-11> -->
-<v-chart :option="option" style="height:300px;width:700px"  ></v-chart></div>
+<v-chart :option="option" style="height:300px;width:700px;"  ></v-chart></div>
 </template>
 
 <script>
@@ -44,7 +44,7 @@ data(){
 option:{
 
   title : {
-        text: '车辆数',
+        text: 'Car quantity',
 
     },
     backgroundColor:'rgba(0,0,0,0)',
@@ -52,7 +52,7 @@ option:{
         trigger: 'axis'
     },
     legend: {
-        data:['车辆数']
+        data:['Car quantity']
     },
     color:'#1e85ab',
     toolbox: {
@@ -66,7 +66,7 @@ option:{
     },
     calculable : true,
     xAxis : [
-        {name:"距离(KM)",
+        {name:"Range(km)",
             type : 'category',
             data :['0-5','5-10','10-15','15-20','20-25','25-30','30-35','35-40','<40']
         }
@@ -77,9 +77,16 @@ option:{
             type : 'value'
         }
     ],
+
+       grid: {
+                left: '0%',
+                right: '15%',
+                bottom: '3%',
+                containLabel: true
+            },
     series : [
         {
-            name:'车辆数',
+            name:'Car quantity',
             type:'bar',
             label:{show:true,position:'top'},
 

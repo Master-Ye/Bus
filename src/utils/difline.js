@@ -4,10 +4,10 @@
         var color,groupId;
         if(data[i][5]==='raw')
             groupId = "原始方案",
-            color = "#db253e"
+            color = "#1f77b4"
         else
             groupId = index==1?"全局优化方案":"偏好方案",
-            color = "#6ab92c"
+            color = index==1?"#ff7f0e":"偏好方案"
         res.push({
             coords: [data[i][0],data[i][2]],
             name: data[i][1]+'——'+data[i][3],

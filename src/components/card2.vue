@@ -14,7 +14,7 @@
         <q-card-section>
           <q-row>
             <q-col style="display: inline-block">
-              <span>请选择第一个方案</span>
+              <span>请先选择第一个方案</span>
               <q-select
                 v-model="selectedValue1"
                 :options="options1"
@@ -25,12 +25,13 @@
               <span class="relative left-10">请选择第二个方案</span>
               <q-select
                 v-model="selectedValue2"
-                :options="options1"
+                :options="options2"
                 label="Select 2"
                 style="display: inline-block; width: 170px"
                 class="relative left-15"
               />
-<span class="relative left-90 text-center">只显示超过<q-input v-model="text"  style="display: inline-block; width: 50px" />KM的数据</span>
+              <q-btn color="secondary" label="确认比较"  class="relative left-30" @click="compare "/>
+<span class="relative left-60 text-center">只显示超过<q-input v-model="text"  style="display: inline-block; width: 50px" />KM的数据</span>
 
 
             </q-col>
@@ -190,21 +191,58 @@ export default {
   },
   data() {
     return {
+      linedata: [],
+     parkpointdata : [],
+     stationpointdata : [],
       text:0,
       options1: [
+        {label:"原始方案",value:0},
         { label: "全局优化", value: 1 },
         { label: "偏好方案1", value: 2 },
         { label: "偏好方案2", value: 3 },
       ],
+
       selectedValue1: null,
-      selectedValue2: null,
+      selectedValue2:null,
+
     };
   },
   computed: {
-
+options2(){
+  return this.options1.filter(item => item != this.selectedValue1)
+}
 
   },
   methods: {
+  compare(){
+let index=0
+if(this.selectedValue1==null||this.selectedValue2==null||(this.selectedValue1==this.selectedValue2))
+{return}
+if(this.selectedValue1.value+this.selectedValue2.value==1)
+{
+  this.linedata = this.$store.state.diffdata12.gdxdata;
+          this.parkpointdata=this.$store.state.diffdata12.parkcapacity;
+          this.stationpointdata=this.$store.state.diffdata12.stationdata;
+index=1
+}
+if(this.selectedValue1.value+this.selectedValue2.value==2)
+{
+  this.linedata = this.$store.state.diffdata13.GSdata;
+          this.parkpointdata=this.$store.state.diffdata13.parkcapacity;
+          this.stationpointdata=this.$store.state.diffdata13.stationdata;
+          index=2
+}
+if(this.selectedValue1.value+this.selectedValue2.value==3)
+{if(this.selectedValue1==0||this.selectedValue2==0)
+  { this.linedata = this.$store.state.diffdata14.GS2data;
+    this.parkpointdata=this.$store.state.diffdata14.parkcapacity;
+    this.stationpointdata=this.$store.state.diffdata14.stationdata;
+  index=3}
+}
+this.go(this.parkpointdata,this.stationpointdata,this.linedata,index-1,this.text);
+
+
+  },
 go(parkpointdata,stationpointdata,linedata,index,limit)
 {
   const linedata1=kmselect(linedata,limit)
@@ -352,8 +390,8 @@ formatter: '{b}:{c}'
               color: tulicolor[index],
             },
             seriesIndex: 2,
-            right: "35%",
-            bottom: "20%",
+            right: "10%",
+            bottom: "10%",
             backgroundColor: "#ffffff",
           },
         ],
@@ -394,73 +432,18 @@ formatter: '{b}:{c}'
           },
         ],
       });
+      console.log(line(linedata1,index+1))
       var heatmap_C_1 = myChart.getModel().getComponent("bmap").getBMap();
     heatmap_C_1.addControl(new BMap.NavigationControl());
     heatmap_C_1.disableScrollWheelZoom()
 }
   },
   watch: {
-    selectedValue1(newvalue) {
-      console.log(newvalue.value);
-      let linedata = [];
-      let parkpointdata = [];
-      let stationpointdata = [];
-      switch (newvalue.value) {
-        case 1: {
 
-          linedata = this.$store.state.diffdata12.gdxdata;
-          parkpointdata=this.$store.state.diffdata12.parkcapacity;
-          stationpointdata=this.$store.state.diffdata12.stationdata;
-        }
-        break
-        case 2: {
-          console.log("111");
-          linedata = this.$store.state.diffdata13.GSdata;
-          parkpointdata=this.$store.state.diffdata13.parkcapacity;
-          stationpointdata=this.$store.state.diffdata13.stationdata;
-        }
-        break
-        case 3: {
-          console.log("111");
-          linedata = this.$store.state.diffdata14.GS2data;
-          parkpointdata=this.$store.state.diffdata14.parkcapacity;
-          stationpointdata=this.$store.state.diffdata14.stationdata;
-        }
-        break
-      }
-this.go(parkpointdata,stationpointdata,linedata,newvalue.value-1,this.text);
-
-
-    },
   text(newvalue)
   {
-    let linedata = [];
-      let parkpointdata = [];
-      let stationpointdata = [];
-      switch (this.selectedValue1.value) {
-        case 1: {
 
-          linedata = this.$store.state.diffdata12.gdxdata;
-          parkpointdata=this.$store.state.diffdata12.parkcapacity;
-          stationpointdata=this.$store.state.diffdata12.stationdata;
-        }
-        break
-        case 2: {
-          console.log("111");
-          linedata = this.$store.state.diffdata13.GSdata;
-          parkpointdata=this.$store.state.diffdata13.parkcapacity;
-          stationpointdata=this.$store.state.diffdata13.stationdata;
-        }
-        break
-        case 3: {
-          console.log("111");
-          linedata = this.$store.state.diffdata14.GS2data;
-          parkpointdata=this.$store.state.diffdata14.parkcapacity;
-          stationpointdata=this.$store.state.diffdata14.stationdata;
-        }
-        break
-      }
-this.go(parkpointdata,stationpointdata,linedata,newvalue.value-1,newvalue);
+this.go(this.parkpointdata,this.stationpointdata,this.linedata,newvalue.value-1,newvalue);
 
   }
   },
