@@ -6,9 +6,15 @@ import {data12} from "~/store/modules/diff12.js"
 import {data14} from "~/store/modules/diff14.js"
 import {data23} from "~/store/modules/diff23.js"
 import {data24} from "~/store/modules/diff24.js"
+import {options111} from "~/store/modules/sandiandata.js"
 import {data34} from "~/store/modules/diff34.js"
+import {options } from "~/store/modules/zhudata.js"
+import {tableoption} from "~/store/modules/tabledata.js"
 const store = createStore({
   state: {
+	tableoption:tableoption,
+	zhuoptions:options,
+	sandianoption:options111,
 	diffdata13:{
 		stationdata:data13.stationdata,
 		data:data13.GSdata,

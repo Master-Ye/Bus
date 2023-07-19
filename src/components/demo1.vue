@@ -1109,7 +1109,7 @@ bottom:"8%"
               ],
               calculable: true,
               inRange: {
-                color: ["#6ab92c", "#aed606", "#fef804", "#ffc000", "#ffff01", "#92d14f"],
+                color: ["#6ab92c", "#fef100", "#ffc000", "#ff7b00", "#db253e", "#5b1875"],
               },
               seriesIndex: [2, 5],
               right: "35%",
@@ -1316,7 +1316,7 @@ bottom:"8%"
             ],
             calculable: true,
             inRange: {
-              color: ["#6ab92c", "#aed606", "#fef804", "#ff7b00", "#db253e", "#5b1875"],
+              color: ["#6ab92c", "#fef100", "#ffc000", "#ff7b00", "#db253e", "#5b1875"],
             },
             seriesIndex: [2, 5],
             right: "20%",

@@ -4,9 +4,12 @@
 
 <script>
 export default {
+mounted(){
+
+},
 data(){
     return {
-        options:{
+        options1:{
                     title: {
                         top:"0%",
                         text: 'Car num',
@@ -71,6 +74,11 @@ top:17,
                     ]
                 }
 
+    }
+},
+computed:{
+    options(){
+        return this.$store.state.zhuoptions
     }
 }
 }

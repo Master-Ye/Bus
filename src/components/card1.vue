@@ -18,7 +18,7 @@
 
       <q-card-section horizontal >
         <q-card-section>
-       <table1 class="relative bottom-70 right-10 inline-block"></table1>
+       <table1 class="absolute bottom-70 right-10 inline-block"></table1>
        <sandian class="relative left-20 inline-block bottom-10"></sandian>
 
 

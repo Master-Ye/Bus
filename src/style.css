@@ -15,26 +15,36 @@
 }
 
 .lu-th-label{
-  font-weight: 100;;
+  font-weight: 100;
   font-size: 1px;
 }
 section[title="Rank"]{
- opacity: 0;
- cursor: default;
+ opacity: 0 !important;
+ cursor: default !important;
 }
 section[title="Aggregate Groups"]{
   opacity: 0;
   cursor: default;
 
  }
+ .q-tab__label{
+font-size: 12px !important;
+ }
+ aside{
+    display: none !important;
+ }
 .disable{
 cursor: default;
 }
-aside{
-display: none;
+.lu-typed-icon[data-type-cat=number]::before{
+  display:none !important;
 }
+.lu-typed-icon[data-type-cat=categorical]::before{
+  display:none !important;
+}
+
 section[data-id="col5"]{
-width: 110px;
+width: 110px !important;
 }
 
 #dituContent img{

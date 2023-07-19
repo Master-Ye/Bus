@@ -1,6 +1,5 @@
 <template>
   <div class="relative">
-
     <v-chart
       style="width: 160px; height: 160px"
       :option="smalloption"
@@ -157,8 +156,6 @@ export default {
 
     var heatmap_C_1 = myChart.getModel().getComponent("bmap").getBMap();
     heatmap_C_1.addControl(new BMap.NavigationControl());
-
-
   },
   watch: {
     nowparkid(newid) {
